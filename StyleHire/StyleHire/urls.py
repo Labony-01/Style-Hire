@@ -24,6 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home),
     path('home/',views.home, name='home'),
-
+    path('home.html', views.home_redirect, name='home_redirect'),
 
 ]
