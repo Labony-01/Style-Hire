@@ -292,6 +292,16 @@ a {
   transition: background-color 0.6s ease-out;
 }
 
+.text-icon {
+  display: inline-flex;       /* Aligns the icon and text neatly */
+  align-items: center;        /* Vertically centers items */
+  gap: 0.5rem;                /* Space between the icon and text */
+  font-size: 1rem;            /* Adjust the text size */
+  color: inherit;             /* Inherit color from parent */
+  text-decoration: none;      /* Prevent underline for links */
+  cursor: pointer;            /* Indicates interactivity */
+}}
+
 /* slideshow */
 .slideshow {
   overflow: hidden;

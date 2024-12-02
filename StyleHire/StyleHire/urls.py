@@ -1,29 +1,25 @@
-"""
-URL configuration for StyleHire project.
+# urls.py
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from.import views
+from django.conf import settings
+from django.conf.urls.static import static
 
+from . import views
 
 urlpatterns = [
-
     path('admin/', admin.site.urls),
-    path('',views.home),
-    path('home/',views.home, name='home'),
-    path('home.html', views.home_redirect, name='home_redirect'),
-
+    path('', views.home, name='home'),
+    path('signup/', views.signup_view, name='signup'),
+    path('signin/', views.signin_view, name='signin'),
+    path('signout/', views.signout_view, name='signout'),
+    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
+    path('products/gender/<str:gender>/', views.product_list_by_gender, name='product_list_by_gender'),
+    path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.cart_detail, name='cart_detail'),
+    path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
