@@ -306,6 +306,13 @@
                     <a href="{% url 'signup' %}" class="text-uppercase mx-3">Sign Up</a>
                 </li>
             {% endif %}
+            <li class="d-none d-lg-block">
+                {% if request.session.is_admin %}
+                    <a href="{% url 'admin_dashboard' %}" class="text-uppercase mx-3">Admin</a>
+                {% else %}
+                    <a href="{% url 'admin_login' %}" class="text-uppercase mx-3">Admin Login</a>
+                {% endif %}
+            </li>
             <li class="d-lg-none">
               <a href="#" class="mx-2">
                 <svg width="24" height="24" viewBox="0 0 24 24">

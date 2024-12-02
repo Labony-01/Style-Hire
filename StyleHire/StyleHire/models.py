@@ -6,10 +6,11 @@ from django.contrib.auth.models import User
 
 class Product(models.Model):
     CATEGORY_CHOICES = (
-        ('tops', 'Tops'),
-        ('bottoms', 'Bottoms'),
-        ('dresses', 'Dresses'),
-        ('accessories', 'Accessories'),
+        ('bridal', 'Bridal'),
+        ('casual', 'Casual'),
+        ('classic', 'Classic'),
+        ('formal', 'Formal'),
+        ('party', 'Party'),
         # Add more categories as needed
     )
 
@@ -21,8 +22,9 @@ class Product(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='tops')
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='unisex')
+    tags = models.CharField(max_length=255, blank=True)  # Comma-separated tags
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='casual')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='female')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     image = models.ImageField(upload_to='products/', blank=True, null=True)

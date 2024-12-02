@@ -4,9 +4,114 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Product, Cart, CartItem, WishList, WishListItem
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from .models import Product
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+
+# Admin Login View
+def admin_login(request):
+    print(request.method)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username,password)
+        # Static username and password
+        if username == 'admin' and password == 'admin123':
+            request.session['is_admin'] = True
+            print("Is Admin = ", True)
+            return redirect('admin_dashboard')
+        else:
+            messages.error(request, 'Invalid credentials')
+            return redirect('admin_login')
+    return render(request, 'admin_login.html')
+
+# Admin Logout View
+def admin_logout(request):
+    try:
+        del request.session['is_admin']
+    except KeyError:
+        pass
+    messages.info(request, 'Logged out')
+    return redirect('home')
+
+# Admin Dashboard View
+def admin_dashboard(request):
+    if not request.session.get('is_admin'):
+        return redirect('admin_login')
+    products = Product.objects.all()
+    return render(request, 'admin_dashboard.html', {'products': products})
+
+# Admin Add Product View
+def admin_add_product(request):
+    if not request.session.get('is_admin'):
+        return redirect('admin_login')
+    if request.method == 'POST':
+        # Handle form submission
+        name = request.POST['name']
+        description = request.POST['description']
+        tags = request.POST['tags']
+        category = request.POST['category']
+        gender = request.POST['gender']
+        price = request.POST['price']
+        stock = request.POST['stock']
+        image = request.FILES.get('image')
+        product = Product.objects.create(
+            name=name,
+            description=description,
+            tags=tags,
+            category=category,
+            gender=gender,
+            price=price,
+            stock=stock,
+            image=image,
+        )
+        messages.success(request, 'Product added successfully')
+        return redirect('admin_dashboard')
+
+    category_choices = Product.CATEGORY_CHOICES
+    gender_choices = Product.GENDER_CHOICES
+    return render(request, 'admin_add_product.html', {
+        'category_choices': category_choices,
+        'gender_choices': gender_choices,
+    })
+
+# Admin Edit Product View
+def admin_edit_product(request, product_id):
+    if not request.session.get('is_admin'):
+        return redirect('admin_login')
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        # Handle form submission
+        product.name = request.POST['name']
+        product.description = request.POST['description']
+        product.tags = request.POST['tags']
+        product.category = request.POST['category']
+        product.gender = request.POST['gender']
+        product.price = request.POST['price']
+        product.stock = request.POST['stock']
+        if 'image' in request.FILES:
+            product.image = request.FILES['image']
+        product.save()
+        messages.success(request, 'Product updated successfully')
+        return redirect('admin_dashboard')
+
+    category_choices = Product.CATEGORY_CHOICES
+    gender_choices = Product.GENDER_CHOICES
+    return render(request, 'admin_edit_product.html', {
+        'product': product,
+        'category_choices': category_choices,
+        'gender_choices': gender_choices,
+    })
+
+# Admin Delete Product View
+def admin_delete_product(request, product_id):
+    if not request.session.get('is_admin'):
+        return redirect('admin_login')
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    messages.success(request, 'Product deleted successfully')
+    return redirect('admin_dashboard')
 
 # Home View
 def home(request):
