@@ -21,8 +21,14 @@ urlpatterns = [
     # Cart and Wishlist
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_detail, name='cart_detail'),
+    path('cart/update/', views.update_cart_item, name='update_cart_item'),
+    path('order/success/', views.order_success, name='order_success'),
     path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
+    path('shop/', views.shop_view, name='shop'),
+    path('gents/', views.gents_view, name='gents'),
+    path('ladies/', views.ladies_view, name='ladies'),
+    path('contact/', views.contact_view, name='contact'),
     # Admin paths
     path('dashboard/login/', views.admin_login, name='admin_login'),
     path('dashboard/logout/', views.admin_logout, name='admin_logout'),
