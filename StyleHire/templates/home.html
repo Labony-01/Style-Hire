@@ -51,49 +51,59 @@
     </div>
 </section>
 
-  <section class="features py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="0">
-          <div class="py-5">
+ <section class="features py-5">
+  <div class="container">
+    <div class="row">
+      <!-- Book An Appointment Section -->
+      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="0">
+        <div class="py-5">
+          <a href="/appointment" class="d-block text-decoration-none">
             <svg width="38" height="38" viewBox="0 0 24 24">
               <use xlink:href="#calendar"></use>
             </svg>
             <h4 class="element-title text-capitalize my-3">Book An Appointment</h4>
             <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-          </div>
+          </a>
         </div>
-        <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="300">
-          <div class="py-5">
-            <svg width="38" height="38" viewBox="0 0 24 24">
-              <use xlink:href="#shopping-bag"></use>
-            </svg>
-            <h4 class="element-title text-capitalize my-3">Pick up in store</h4>
-            <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-          </div>
+      </div>
+      
+      <!-- Other Features -->
+      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="300">
+        <div class="py-5">
+          <svg width="38" height="38" viewBox="0 0 24 24">
+            <use xlink:href="#shopping-bag"></use>
+          </svg>
+          <h4 class="element-title text-capitalize my-3">Pick up in store</h4>
+          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
         </div>
-        <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="600">
-          <div class="py-5">
-            <svg width="38" height="38" viewBox="0 0 24 24">
-              <use xlink:href="#gift"></use>
-            </svg>
-            <h4 class="element-title text-capitalize my-3">Special packaging</h4>
-            <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-          </div>
+      </div>
+      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="600">
+        <div class="py-5">
+          <svg width="38" height="38" viewBox="0 0 24 24">
+            <use xlink:href="#gift"></use>
+          </svg>
+          <h4 class="element-title text-capitalize my-3">Special packaging</h4>
+          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
         </div>
-        <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="900">
-          <div class="py-5">
-            <svg width="38" height="38" viewBox="0 0 24 24">
-              <use xlink:href="#arrow-cycle"></use>
-            </svg>
-            <h4 class="element-title text-capitalize my-3">free global returns</h4>
-            <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-          </div>
+      </div>
+      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="900">
+        <div class="py-5">
+          <svg width="38" height="38" viewBox="0 0 24 24">
+            <use xlink:href="#arrow-cycle"></use>
+          </svg>
+          <h4 class="element-title text-capitalize my-3">Free global returns</h4>
+          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
         </div>
       </div>
     </div>
+<<<<<<< HEAD
+  </div>
+</section>
+
+=======
   </section>
   <!-- templates/home.html -->
+>>>>>>> 8bba446aa66a69ef2fc7726caaddb3a7c960d3f4
 
 <section id="new-arrival-bridal-dress" class="new-arrival-bridal-dress product-carousel py-5 position-relative overflow-hidden">
     <div class="container">
@@ -192,72 +202,77 @@
 </section>
 
 
-  <section class="video py-5 overflow-hidden">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 video-content open-up" data-aos="zoom-out">
-        <div class="video-bg">
-          <!-- Background Image for Video -->
-          <img src="{% static 'images/img.png' %}" alt="Bride" class="img img-fluid">
+  <section class="testimonials py-5 bg-light">
+  <div class="section-header text-center mt-5">
+    <h5 class="section-title font-weight-bold text-dark">Customer Reviews</h5>
+  </div>
+  <div class="swiper testimonial-swiper overflow-hidden my-5">
+    <!-- Left Arrow -->
+    <div class="swiper-button-prev"></div>
+    
+    <div class="swiper-wrapper d-flex">
+      <!-- Testimonial 1 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“More than expected – crazy soft, flexible, and perfectly fitted white denim shirt.”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">Casual Way</footer>
+          </blockquote>
         </div>
-        <div class="video-player">
-          <!-- YouTube Video Link -->
-          <a class="youtube" href="img.png" target="_blank">
-            <!-- Play Icon -->
-            <svg width="60" height="60" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" fill="#D90429" />
-              <polygon points="10,8 16,12 10,16" fill="#FFFFFF" />
-            </svg>
-          </a>
+      </div>
+      <!-- Testimonial 2 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“Best fitted white denim shirt – more than expected, crazy soft and flexible.”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">Uptop</footer>
+          </blockquote>
+        </div>
+      </div>
+      <!-- Testimonial 3 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“Flexible, crazy soft, and perfectly fitted white denim shirt beyond expectations.”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">Denim Craze</footer>
+          </blockquote>
+        </div>
+      </div>
+      <!-- Testimonial 4 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“Best fitted, flexible, and ultra-soft white denim shirt. Exceeded all expectations.”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">Uptop</footer>
+          </blockquote>
+        </div>
+      </div>
+      <!-- Testimonial 5 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“I was surprised by the softness and perfect fit of the denim shirt. Highly recommend!”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">Urban Trend</footer>
+          </blockquote>
+        </div>
+      </div>
+      <!-- Testimonial 6 -->
+      <div class="swiper-slide">
+        <div class="testimonial-item text-center px-4">
+          <blockquote class="blockquote text-center">
+            <p class="testimonial-text">“The white denim shirt exceeded my expectations in both comfort and style. Amazing quality!”</p>
+            <footer class="blockquote-footer text-uppercase font-weight-bold">White Charm</footer>
+          </blockquote>
         </div>
       </div>
     </div>
+    <!-- Right Arrow -->
+    <div class="swiper-button-next"></div>
   </div>
+  <div class="testimonial-swiper-pagination d-flex justify-content-center mb-5"></div>
 </section>
 
 
-  <section class="testimonials py-5 bg-light">
-    <div class="section-header text-center mt-5">
-      <h3 class="section-title">OUR CUSTOMER REVIEW</h3>
-    </div>
-    <div class="swiper testimonial-swiper overflow-hidden my-5">
-      <div class="swiper-wrapper d-flex">
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“More than expected crazy soft, flexible and best fitted white simple denim shirt.”</p>
-              <div class="review-title text-uppercase">casual way</div>
-            </blockquote>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p> Best fitted white denim shirt more than expected crazy soft, flexible</p>
-              <div class="review-title text-uppercase">uptop</div>
-            </blockquote>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>“Best fitted white denim shirt more white denim than expected flexible crazy soft.”</p>
-              <div class="review-title text-uppercase">Denim craze</div>
-            </blockquote>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="testimonial-item text-center">
-            <blockquote>
-              <p>Best fitted white denim shirt more than expected crazy soft, flexible</p>
-              <div class="review-title text-uppercase">uptop</div>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="testimonial-swiper-pagination d-flex justify-content-center mb-5"></div>
-  </section>
 
   <section id="related-products" class="related-products product-carousel py-5 position-relative overflow-hidden">
     <div class="container">
@@ -479,7 +494,7 @@
 
   <section class="instagram position-relative">
     <div class="d-flex justify-content-center w-100 position-absolute bottom-0 z-1">
-      <a href="https://www.instagram.com/templatesjungle/" class="btn btn-dark px-5">Follow us on Instagram</a>
+      <a href="https://www.instagram.com" class="btn btn-dark px-5">Follow us on Instagram</a>
     </div>
     <div class="row g-0">
       <div class="col-6 col-sm-4 col-md-2">
@@ -534,11 +549,10 @@
           <div class="footer-menu footer-menu-001">
             <div class="footer-intro mb-4">
               <a href="">
-                <img src="{% static 'images/main-logo.png' %}" alt="logo">
+                 <h5 class="widget-title text-uppercase mb-4">Style Hire</h5>
               </a>
             </div>
-            <p>Gravida massa volutpat aenean odio. Amet, turpis erat nullam fringilla elementum diam in. Nisi, purus
-              vitae, ultrices nunc. Sit ac sit suscipit hendrerit.</p>
+            <p>'Style Hire' makes fashion accessible, affordable, and sustainable by offering a wide range of trendy clothing for rent. Whether you're dressing up for a special occasion or refreshing your wardrobe, we’re here to provide stylish options for every need.</p>
             <div class="social-links">
               <ul class="list-unstyled d-flex flex-wrap gap-3">
                 <li>
@@ -629,13 +643,16 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="footer-menu footer-menu-004 border-animation-left">
-            <h5 class="widget-title text-uppercase mb-4">Contact Us</h5>
-            <p>Do you have any questions or suggestions? <a href="mailto:contact@yourcompany.com"
-                class="item-anchor">contact@yourcompany.com</a></p>
-            <p>Do you need support? Give us a call. <a href="tel:+43 720 11 52 78" class="item-anchor">+43 720 11 52
-                78</a>
-            </p>
-          </div>
+  <h5 class="widget-title text-uppercase mb-4">Contact Us</h5>
+  <p>Do you have any questions or suggestions? <a href="mailto:contact@yourcompany.com" class="item-anchor">
+      <p>22101082@uap-bd.edu</p>
+      <p>22101084@uap-bd.edu</p>
+      <p>22101085@uap-bd.edu</p></a></p>
+              
+              <p>Do you need support? Give us a call. <a href="tel:+880 1622433606" class="item-anchor"><p>+880 1622433606</p></a>
+</div>
+
+
         </div>
       </div>
     </div>
@@ -651,15 +668,15 @@
             <div class="payment-option">
               <span>Payment Option:</span>
               <img src="{% static 'images/visa-card.png' %}" alt="card">
-              <img src="{% static 'images/paypal-card.png' %}" alt="card">
+              
               <img src="{% static 'images/master-card.png' %}" alt="card">
             </div>
           </div>
           <div class="col-md-6 text-end">
-            <p>© Copyright 2022 Kaira. All rights reserved. Design by <a href="https://templatesjungle.com"
-                target="_blank">TemplatesJungle</a> Distribution By <a href="https://themewagon.com"
-              target="blank">[p;;;;t5r=7777777vfgggggg]</a></p>
+            <p>© Copyright 2024 StyleHire. All rights reserved.</p>
+            <p>Design by Mumito, Labony, Apon</p>
           </div>
+
         </div>
       </div>
     </div>

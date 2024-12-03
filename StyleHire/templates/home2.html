@@ -29,6 +29,7 @@
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+       <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
    </head>
    <body class="main-layout">
       <!-- loader -->
@@ -433,6 +434,44 @@
       <!-- google map js -->
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
       <!-- end google map js --> 
+   <section class="testimonials py-5 bg-light">
+  <!-- Testimonials Section Content -->
+</section>
+<div class="swiper testimonial-swiper overflow-hidden my-5">
+  <!-- Left Arrow -->
+  <div class="swiper-button-prev"></div>
+  
+  <div class="swiper-wrapper d-flex">
+    <!-- Your slides here -->
+    <div class="swiper-slide">Testimonial 1</div>
+    <div class="swiper-slide">Testimonial 2</div>
+    <!-- Add more slides -->
+  </div>
+  
+  <!-- Right Arrow -->
+  <div class="swiper-button-next"></div>
+</div>
+
+<!-- Add your other sections or content here -->
+
+<!-- Add the Swiper JS initialization at the end of the body -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+  var swiper = new Swiper('.testimonial-swiper', {
+    loop: true, // Allows the testimonials to loop
+    slidesPerView: 1, // Show 1 slide at a time
+    spaceBetween: 10, // Space between the slides
+    navigation: {
+      nextEl: '.swiper-button-next', // Selector for the next arrow
+      prevEl: '.swiper-button-prev'  // Selector for the previous arrow
+    },
+    pagination: {
+      el: '.testimonial-swiper-pagination', // Selector for the pagination dots
+      clickable: true, // Allows pagination dots to be clicked
+    },
+  });
+</script>
    </body>
 </html>
 
