@@ -1,0 +1,33 @@
+<!-- templates/ladies.html -->
+
+{% extends 'base.html' %}
+  {% load static %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Ladies Collection</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card mb-4">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'images/default_product.jpg' %}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">${{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Add to Cart</a>
+                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-secondary">Add to Wishlist</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

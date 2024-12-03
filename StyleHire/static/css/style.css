@@ -450,6 +450,11 @@ a {
   }
 }
 
+.shipping, .payment-option {
+  clear: both; /* Clear any floated elements */
+}
+}
+
 /* open-up */
 .open-up {
   clip-path: inset(48% 34% 36% 35%);

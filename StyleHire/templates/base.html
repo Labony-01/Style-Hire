@@ -20,6 +20,7 @@
   <link rel="stylesheet"  href="{% static 'css/swiper-bundle.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
 
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -245,7 +246,7 @@
       <div class="row justify-content-between align-items-center w-100">
 
         <div class="col-auto">
-          <a class="navbar-brand text-icon" href="#">
+          <a class="navbar-brand text-icon" href="{% url 'home' %}">
             Style Hire
           </a>
         </div>
@@ -267,19 +268,19 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Home</a>
+                  <a class="nav-link" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Shop</a>
+                  <a class="nav-link" href="{% url 'shop' %}">Shop</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Gents</a>
+                  <a class="nav-link" href="{% url 'gents' %}">Gents</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Female</a>
+                  <a class="nav-link" href="{% url 'ladies' %}">Ladies</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Contact</a>
+                  <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                 </li>
               </ul>
             </div>
@@ -366,6 +367,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="{% static 'js/script.min.js' %}"></script>
   <script src="{% static 'js/modernizer.js' %}"></script>
+
 </body>
 
 </html>
