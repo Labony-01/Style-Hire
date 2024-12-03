@@ -123,6 +123,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Adding custom static directory
 
+LOGIN_URL = '/signin/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
