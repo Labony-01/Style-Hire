@@ -293,14 +293,11 @@ a {
 }
 
 .text-icon {
-  display: inline-flex;       /* Aligns the icon and text neatly */
-  align-items: center;        /* Vertically centers items */
-  gap: 0.5rem;                /* Space between the icon and text */
-  font-size: 1rem;            /* Adjust the text size */
-  color: inherit;             /* Inherit color from parent */
-  text-decoration: none;      /* Prevent underline for links */
-  cursor: pointer;            /* Indicates interactivity */
-}}
+    font-size: 2rem; /* Adjust size as needed */
+    color: #000000; /* Dark black color */
+    font-weight: bold; /* Optional for a more striking look */
+}
+}
 
 /* slideshow */
 .slideshow {
@@ -451,6 +448,11 @@ a {
   100% {
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
   }
+}
+
+.shipping, .payment-option {
+  clear: both; /* Clear any floated elements */
+}
 }
 
 /* open-up */
