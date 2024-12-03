@@ -474,6 +474,8 @@ a {
   }
 }
 
+
+
 /*@keyframes down-leave {
   0% { clip-path: inset(0); }
   100% { clip-path: inset(100% 0 0 0); }
@@ -1064,11 +1066,28 @@ a {
 /*--------------------------------------------------------------
 /** 7.9 Testimonial Slider
 --------------------------------------------------------------*/
+.swiper-button-prev, .swiper-button-next {
+  color: #333; /* Arrow color */
+  font-size: 2rem; /* Arrow size */
+  background-color: rgba(255, 255, 255, 0.7); /* Background for arrows */
+  padding: 10px; /* Padding for arrows */
+  border-radius: 50%;
+}
+
+.swiper-button-prev:hover, .swiper-button-next:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Hover effect */
+}
+
+
 .testimonials .section-title {
   font-size: 1em;
   font-weight: 700;
   line-height: 1;
 }
+.testimonial-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #555;
 
 .testimonial-swiper .testimonial-item blockquote {
   font-size: 2.5em;
