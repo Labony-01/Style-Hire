@@ -1,39 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gents Section</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <h1>Gents Dresses</h1>
-    <div class="dress-container">
-        <div class="dress-item">
-            <img src="{% static 'images/gents_dress1.jpg' %}" alt="Gents Dress 1">
-            <p>Price: $50</p>
-            <p>Status: Available</p>
+<!-- templates/gents.html -->
+
+{% extends 'base.html' %}
+  {% load static %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Gents Collection</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card mb-4">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                <img src="{% static 'images/default_product.jpg' %}" class="card-img-top" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">${{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Add to Cart</a>
+                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-secondary">Add to Wishlist</a>
+                </div>
+            </div>
         </div>
-        <div class="dress-item">
-            <img src="{% static 'images/gents_dress2.jpg' %}" alt="Gents Dress 2">
-            <p>Price: $60</p>
-            <p>Status: Out of Stock</p>
-        </div>
-        <div class="dress-item">
-            <img src="{% static 'images/gents_dress3.jpg' %}" alt="Gents Dress 3">
-            <p>Price: $45</p>
-            <p>Status: Available</p>
-        </div>
-        <div class="dress-item">
-            <img src="{% static 'images/gents_dress4.jpg' %}" alt="Gents Dress 4">
-            <p>Price: $70</p>
-            <p>Status: Available</p>
-        </div>
-        <div class="dress-item">
-            <img src="{% static 'images/gents_dress5.jpg' %}" alt="Gents Dress 5">
-            <p>Price: $80</p>
-            <p>Status: Out of Stock</p>
-        </div>
+        {% empty %}
+        <p>No products available.</p>
+        {% endfor %}
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
