@@ -71,6 +71,9 @@ class WishListItem(models.Model):
 class Order(models.Model):
     PAYMENT_METHOD_CHOICES = (
         ('cod', 'Cash on Delivery'),
+        ('bkash', 'bKash'),
+        ('nagad', 'Nagad'), 
+        ('rocket', 'Rocket'),
         ('card', 'Credit/Debit Card'),
         ('paypal', 'PayPal'),
         # Add more payment methods as needed
@@ -86,7 +89,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Order #{self.id} by {self.user.username}"
+        return f"Order #{self.pk} by {self.user.username}"
 
 class Contact(models.Model):
     name = models.CharField(max_length=255)
@@ -105,4 +108,5 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Price at the time of purchase
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} in Order #{self.order.id}"
+        product_name = self.product.name if self.product else "Deleted Product"
+        return f"{self.quantity} x {product_name} in Order #{self.order.pk}"

@@ -1,33 +1,481 @@
 <!-- templates/ladies.html -->
 
 {% extends 'base.html' %}
-  {% load static %}
-
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center">Ladies Collection</h2>
-    <div class="row">
-        {% for product in products %}
-        <div class="col-md-3">
-            <div class="card mb-4">
-                {% if product.image %}
-                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                {% else %}
-                <img src="{% static 'images/default_product.jpg' %}" class="card-img-top" alt="{{ product.name }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">${{ product.price }}</p>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View</a>
-                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Add to Cart</a>
-                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-secondary">Add to Wishlist</a>
+  {% load static %}
+
+<!-- Modern Ladies Hero Section -->
+<section class="ladies-hero-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 80px 0 60px; position: relative; overflow: hidden;">
+    <div class="ladies-hero-shapes">
+        <div class="ladies-shape ladies-shape-1"></div>
+        <div class="ladies-shape ladies-shape-2"></div>
+        <div class="ladies-shape ladies-shape-3"></div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <span class="ladies-badge badge bg-light text-primary px-3 py-2 rounded-pill mb-3 fs-6">
+                    👗 Ladies' Collection
+                </span>
+                <h1 class="ladies-title display-3 fw-bold text-white mb-4">
+                    Elegant Women's Fashion
+                </h1>
+                <p class="ladies-description lead text-white opacity-90 mb-4">
+                    Discover beautiful styles crafted for the modern woman
+                </p>
+                <div class="ladies-stats row justify-content-center mt-4">
+                    <div class="col-auto">
+                        <h4 class="fw-bold text-white mb-1">{{ products.count }}+</h4>
+                        <p class="small text-white opacity-75 mb-0">Women's Items</p>
+                    </div>
+                    <div class="col-auto">
+                        <h4 class="fw-bold text-white mb-1">Elegant</h4>
+                        <p class="small text-white opacity-75 mb-0">Designs</p>
+                    </div>
+                    <div class="col-auto">
+                        <h4 class="fw-bold text-white mb-1">24/7</h4>
+                        <p class="small text-white opacity-75 mb-0">Support</p>
+                    </div>
                 </div>
             </div>
         </div>
-        {% empty %}
-        <p>No products available.</p>
-        {% endfor %}
     </div>
-</div>
+</section>
+
+<!-- Modern Filter Section -->
+<section class="ladies-filter-section py-4" style="background: linear-gradient(135deg, #ffeef8 0%, #f0e6ff 100%); border-bottom: 1px solid #e9ecef;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="ladies-filter-tabs d-flex flex-wrap gap-2">
+                    <button class="ladies-filter-btn active" data-filter="all">
+                        <i class="bi bi-grid me-2"></i>All Women's
+                    </button>
+                    <button class="ladies-filter-btn" data-filter="formal">
+                        <i class="bi bi-briefcase me-2"></i>Formal
+                    </button>
+                    <button class="ladies-filter-btn" data-filter="casual">
+                        <i class="bi bi-cup me-2"></i>Casual
+                    </button>
+                    <button class="ladies-filter-btn" data-filter="party">
+                        <i class="bi bi-star me-2"></i>Party
+                    </button>
+                    <button class="ladies-filter-btn" data-filter="bridal">
+                        <i class="bi bi-heart me-2"></i>Bridal
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-4 text-end">
+                <div class="ladies-sort-dropdown">
+                    <select class="form-select ladies-select" id="sortLadiesProducts">
+                        <option value="name">Sort by Name</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modern Products Grid -->
+<section class="ladies-products-section py-5">
+    <div class="container">
+        <div class="row g-4" id="ladiesProductsGrid">
+            {% for product in products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 ladies-product-item" 
+                 data-category="{{ product.category }}"
+                 data-price="{{ product.price }}"
+                 data-name="{{ product.name|lower }}"
+                 data-created="{{ product.created_at|date:'Y-m-d' }}">
+                <div class="modern-ladies-card h-100">
+                    <div class="ladies-image-container position-relative overflow-hidden">
+                        <a href="{% url 'product_detail' product.id %}">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="ladies-image img-fluid">
+                            {% else %}
+                            <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="ladies-image img-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="ladies-overlay">
+                            <div class="ladies-actions">
+                                <a href="{% url 'add_to_wishlist' product.id %}" class="ladies-action-btn" title="Add to Wishlist">
+                                    <i class="bi bi-heart"></i>
+                                </a>
+                                <a href="{% url 'product_detail' product.id %}" class="ladies-action-btn" title="Quick View">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'add_to_cart' product.id %}" class="ladies-action-btn" title="Add to Cart">
+                                    <i class="bi bi-bag-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ladies-badges">
+                            {% if product.category == 'bridal' %}
+                            <span class="ladies-badge badge bg-danger">Special</span>
+                            {% elif product.category == 'party' %}
+                            <span class="ladies-badge badge bg-warning">Glamorous</span>
+                            {% elif product.category == 'formal' %}
+                            <span class="ladies-badge badge bg-info">Professional</span>
+                            {% else %}
+                            <span class="ladies-badge badge bg-primary">Casual</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="ladies-content p-4">
+                        <div class="ladies-category text-muted small text-uppercase mb-2">
+                            {{ product.get_category_display }} • Women's Fashion
+                        </div>
+                        <h5 class="ladies-title fw-bold mb-2">
+                            <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                        </h5>
+                        <p class="ladies-description text-muted small mb-3">{{ product.description|truncatewords:12 }}</p>
+                        <div class="ladies-footer d-flex justify-content-between align-items-center mb-3">
+                            <div class="ladies-price">
+                                <span class="price fw-bold text-primary fs-5">${{ product.price }}</span>
+                            </div>
+                            <div class="ladies-rating">
+                                <div class="stars text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="rating-text small text-muted ms-1">4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ladies-buttons d-flex gap-2">
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary flex-fill rounded-pill">
+                                <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                            </a>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary rounded-pill">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="no-ladies-products">
+                    <i class="bi bi-person-dress display-1 text-muted mb-3"></i>
+                    <h3 class="text-muted">No women's products available</h3>
+                    <p class="text-muted">Check back later for new arrivals!</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Modern CSS Styles -->
+<style>
+/* Ladies Hero Section */
+.ladies-hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.ladies-hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.ladies-shape {
+    position: absolute;
+    opacity: 0.1;
+}
+
+.ladies-shape-1 {
+    width: 200px;
+    height: 200px;
+    background: white;
+    border-radius: 50%;
+    top: 10%;
+    right: 20%;
+    animation: ladiesFloat 6s ease-in-out infinite;
+}
+
+.ladies-shape-2 {
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    bottom: 20%;
+    left: 10%;
+    animation: ladiesFloat 8s ease-in-out infinite reverse;
+}
+
+.ladies-shape-3 {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    top: 60%;
+    right: 10%;
+    animation: ladiesFloat 4s ease-in-out infinite;
+}
+
+@keyframes ladiesFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.ladies-hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Filter Section */
+.ladies-filter-tabs {
+    gap: 0.5rem;
+}
+
+.ladies-filter-btn {
+    background: white;
+    border: 2px solid #e9ecef;
+    color: #6c757d;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.ladies-filter-btn:hover {
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(var(--bs-primary-rgb), 0.2);
+}
+
+.ladies-filter-btn.active {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.ladies-select {
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+/* Modern Ladies Cards */
+.modern-ladies-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.modern-ladies-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.ladies-image-container {
+    height: 280px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+}
+
+.ladies-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.ladies-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modern-ladies-card:hover .ladies-overlay {
+    opacity: 1;
+}
+
+.modern-ladies-card:hover .ladies-image {
+    transform: scale(1.1);
+}
+
+.ladies-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.ladies-action-btn {
+    width: 45px;
+    height: 45px;
+    background: white;
+    color: var(--bs-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.ladies-action-btn:hover {
+    background: var(--bs-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.ladies-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.ladies-badge {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.ladies-content {
+    transition: all 0.3s ease;
+}
+
+.modern-ladies-card:hover .ladies-content {
+    background: linear-gradient(135deg, #fff 0%, #ffeef8 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ladies-title {
+        font-size: 2rem !important;
+    }
+    
+    .ladies-image-container {
+        height: 220px;
+    }
+    
+    .ladies-filter-tabs {
+        justify-content: center;
+    }
+    
+    .ladies-filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Animation for product items */
+.ladies-product-item {
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.ladies-product-item.hide {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+/* No products state */
+.no-ladies-products {
+    padding: 3rem;
+    background: linear-gradient(135deg, #ffeef8 0%, #f0e6ff 100%);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+/* Special animations for ladies section */
+.ladies-badge {
+    animation: ladiesPulse 2s infinite;
+}
+
+@keyframes ladiesPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+</style>
+
+<!-- Modern JavaScript for Filtering and Sorting -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.ladies-filter-btn');
+    const productItems = document.querySelectorAll('.ladies-product-item');
+    const sortSelect = document.getElementById('sortLadiesProducts');
+    const productsGrid = document.getElementById('ladiesProductsGrid');
+
+    // Filter functionality
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+            
+            productItems.forEach(item => {
+                if (filter === 'all') {
+                    item.classList.remove('hide');
+                } else {
+                    const category = item.dataset.category;
+                    
+                    if (category === filter) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                }
+            });
+        });
+    });
+
+    // Sort functionality
+    sortSelect.addEventListener('change', function() {
+        const sortValue = this.value;
+        const visibleItems = Array.from(productItems).filter(item => !item.classList.contains('hide'));
+        
+        visibleItems.sort((a, b) => {
+            switch(sortValue) {
+                case 'name':
+                    return a.dataset.name.localeCompare(b.dataset.name);
+                case 'price-low':
+                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                case 'price-high':
+                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                case 'newest':
+                    return new Date(b.dataset.created) - new Date(a.dataset.created);
+                default:
+                    return 0;
+            }
+        });
+        
+        // Reorder DOM elements
+        visibleItems.forEach(item => {
+            productsGrid.appendChild(item);
+        });
+    });
+});
+</script>
+
 {% endblock %}

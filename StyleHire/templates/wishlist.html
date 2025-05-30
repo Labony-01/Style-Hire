@@ -1,35 +1,257 @@
 <!-- templates/wishlist.html -->
 
 {% extends 'base.html' %}
-  {% load static %}
-
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center">Your Wishlist</h2>
-    {% if items %}
-    <div class="row">
-        {% for item in items %}
-        <div class="col-md-3">
-            <div class="card mb-4">
-                {% if item.product.image %}
-                <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.name }}">
-                {% else %}
-                <img src="{% static 'images/default_product.jpg' %}" class="card-img-top" alt="{{ item.product.name }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.product.name }}</h5>
-                    <p class="card-text">${{ item.product.price }}</p>
-                    <a href="{% url 'product_detail' item.product.id %}" class="btn btn-primary">View</a>
-                    <a href="{% url 'add_to_cart' item.product.id %}" class="btn btn-success">Add to Cart</a>
-                    <!-- Optionally, add a button to remove from wishlist -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 100vh;">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="text-center">
+                    <h1 class="display-4 fw-bold mb-3" style="color: var(--heading-color);">Your Wishlist</h1>
+                    <p class="lead text-muted">Save items for later and never miss out on your favorites</p>
+                    <div class="wishlist-stats d-flex justify-content-center gap-4 mt-4">
+                        <div class="stat-item text-center">
+                            <div class="stat-icon mb-2">
+                                <i class="bi bi-heart-fill" style="font-size: 2rem; color: var(--bs-primary);"></i>
+                            </div>
+                            <div class="stat-number fw-bold">{{ items|length }}</div>
+                            <div class="stat-label text-muted">Items</div>
+                        </div>
+                        <div class="stat-item text-center">
+                            <div class="stat-icon mb-2">
+                                <i class="bi bi-tag-fill" style="font-size: 2rem; color: var(--bs-primary);"></i>
+                            </div>
+                            <div class="stat-number fw-bold">$0</div>
+                            <div class="stat-label text-muted">Total Value</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+
+        {% if items %}
+        <!-- Wishlist Items Grid -->
+        <div class="row g-4">
+            {% for item in items %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="wishlist-card h-100">
+                    <div class="card modern-card shadow-sm border-0 h-100">
+                        <div class="card-img-wrapper position-relative overflow-hidden">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" class="card-img-top wishlist-img" alt="{{ item.product.name }}">
+                            {% else %}
+                            <img src="{% static 'images/default_product.jpg' %}" class="card-img-top wishlist-img" alt="{{ item.product.name }}">
+                            {% endif %}
+                            
+                            <!-- Overlay Actions -->
+                            <div class="img-overlay d-flex justify-content-center align-items-center">
+                                <div class="action-buttons d-flex gap-2">
+                                    <a href="{% url 'product_detail' item.product.id %}" class="btn btn-light btn-sm rounded-pill" title="Quick View">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'add_to_cart' item.product.id %}" class="btn btn-primary btn-sm rounded-pill" title="Add to Cart">
+                                        <i class="bi bi-bag-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!-- Remove Button -->
+                            <button class="btn btn-outline-danger btn-sm position-absolute remove-btn" 
+                                    onclick="removeFromWishlist({{ item.product.id }}, '{{ item.product.name }}')"
+                                    title="Remove from wishlist">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate fw-semibold mb-2">{{ item.product.name }}</h5>
+                            <p class="card-text text-muted small mb-3">{{ item.product.description|truncatewords:10 }}</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="price-section">
+                                    <span class="price fw-bold text-primary fs-5">${{ item.product.price }}</span>
+                                </div>
+                                <div class="action-section">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{% url 'product_detail' item.product.id %}" 
+                                           class="btn btn-outline-primary btn-sm rounded-start">
+                                            View
+                                        </a>
+                                        <a href="{% url 'add_to_cart' item.product.id %}" 
+                                           class="btn btn-primary btn-sm rounded-end">
+                                            <i class="bi bi-cart-plus me-1"></i>Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <div class="wishlist-actions">
+                    <a href="{% url 'shop' %}" class="btn btn-outline-primary btn-lg me-3" style="border-radius: 25px;">
+                        <i class="bi bi-arrow-left me-2"></i>Continue Shopping
+                    </a>
+                    <button class="btn btn-primary btn-lg" style="border-radius: 25px;" onclick="addAllToCart()">
+                        <i class="bi bi-cart-plus me-2"></i>Add All to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Empty Wishlist State -->
+        <div class="row">
+            <div class="col-12">
+                <div class="empty-wishlist text-center py-5">
+                    <div class="empty-icon mb-4">
+                        <i class="bi bi-heart" style="font-size: 5rem; color: #dee2e6;"></i>
+                    </div>
+                    <h3 class="mb-3">Your Wishlist is Empty</h3>
+                    <p class="text-muted mb-4">Start adding items you love to keep track of them</p>
+                    <a href="{% url 'shop' %}" class="btn btn-primary btn-lg" style="border-radius: 25px;">
+                        <i class="bi bi-shop me-2"></i>Start Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <p>Your wishlist is empty.</p>
-    {% endif %}
 </div>
+
+<style>
+.modern-card {
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.modern-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.card-img-wrapper {
+    height: 250px;
+    border-radius: 15px 15px 0 0;
+}
+
+.wishlist-img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.modern-card:hover .wishlist-img {
+    transform: scale(1.05);
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modern-card:hover .img-overlay {
+    opacity: 1;
+}
+
+.remove-btn {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item {
+    padding: 0 20px;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    color: var(--bs-primary);
+}
+
+.price {
+    font-size: 1.25rem;
+}
+
+.btn-group-sm .btn {
+    font-size: 0.875rem;
+}
+
+.empty-wishlist {
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+</style>
+
+<script>
+// Remove from wishlist with confirmation
+function removeFromWishlist(productId, productName) {
+    if (confirm(`Remove "${productName}" from your wishlist?`)) {
+        window.location.href = `{% url 'remove_from_wishlist' 0 %}`.replace('0', productId);
+    }
+}
+
+// Add all items to cart
+function addAllToCart() {
+    if (confirm('Add all wishlist items to cart?')) {
+        // Get all product IDs from the current wishlist
+        const productIds = [];
+        {% for item in items %}
+        productIds.push({{ item.product.id }});
+        {% endfor %}
+        
+        // Add each item to cart (this could be optimized with a bulk endpoint)
+        let completed = 0;
+        productIds.forEach(id => {
+            fetch(`{% url 'add_to_cart' 0 %}`.replace('0', id), {
+                method: 'GET',
+            }).then(() => {
+                completed++;
+                if (completed === productIds.length) {
+                    alert('All items added to cart!');
+                    window.location.href = '{% url 'cart_detail' %}';
+                }
+            });
+        });
+    }
+}
+
+// Calculate total value
+document.addEventListener('DOMContentLoaded', function() {
+    let totalValue = 0;
+    {% for item in items %}
+    totalValue += {{ item.product.price }};
+    {% endfor %}
+    
+    // Update the total value display
+    const totalElement = document.querySelector('.stat-number');
+    if (totalElement && totalElement.textContent === '$0') {
+        totalElement.textContent = '$' + totalValue.toFixed(2);
+    }
+});
+</script>
+
 {% endblock %}

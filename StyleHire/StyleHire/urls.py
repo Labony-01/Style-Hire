@@ -15,6 +15,12 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('signin/', views.signin_view, name='signin'),
     path('signout/', views.signout_view, name='signout'),
+    path('forgot-password/', views.forgot_password_view, name='forgot_password'),
+    # User Profile
+    path('profile/', views.profile_view, name='profile'),
+    path('update-profile/', views.update_profile_view, name='update_profile'),
+    # Search
+    path('search/', views.search_view, name='search'),
     # Product views
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('products/gender/<str:gender>/', views.product_list_by_gender, name='product_list_by_gender'),
@@ -25,6 +31,7 @@ urlpatterns = [
     path('order/success/', views.order_success, name='order_success'),
     path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
+    path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('shop/', views.shop_view, name='shop'),
     path('gents/', views.gents_view, name='gents'),
     path('ladies/', views.ladies_view, name='ladies'),

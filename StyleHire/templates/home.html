@@ -1,38 +1,545 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% load static %}
+{% load static %}
 
-<section id="billboard" class="bg-light py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <h1 class="section-title text-center mt-4" data-aos="fade-up">New Collections</h1>
-            <div class="col-md-6 text-center" data-aos="fade-up" data-aos-delay="300">
-                <p>Explore our latest collection of dresses.</p>
+<!-- Modern Hero Section -->
+<section id="hero" class="hero-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 90vh; position: relative; overflow: hidden;">
+    <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    <div class="container h-100">
+        <div class="row align-items-center h-100 py-5">
+            <div class="col-lg-6">
+                <div class="hero-content text-white">
+                    <span class="hero-badge badge bg-light text-primary px-3 py-2 rounded-pill mb-3 fs-6">
+                        ✨ New Season Collection
+                    </span>
+                    <h1 class="hero-title display-2 fw-bold mb-4" style="line-height: 1.1;">
+                        Fashion That 
+                        <span class="text-warning">Inspires</span>
+                        Your Style
+                    </h1>
+                    <p class="hero-description lead mb-4 opacity-90">
+                        Discover the latest trends in fashion with our curated collection of stunning dresses, elegant wear, and stylish accessories.
+                    </p>
+                    <div class="hero-buttons d-flex gap-3 flex-wrap">
+                        <a href="{% url 'shop' %}" class="btn btn-light btn-lg px-4 py-3 rounded-pill fw-semibold">
+                            <i class="bi bi-bag me-2"></i>Shop Now
+                        </a>
+                        <a href="#collections" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-semibold">
+                            <i class="bi bi-arrow-down me-2"></i>Explore Collections
+                        </a>
+                    </div>
+                    <div class="hero-stats row mt-5 pt-3">
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-1">1000+</h3>
+                            <p class="small opacity-75 mb-0">Products</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-1">500+</h3>
+                            <p class="small opacity-75 mb-0">Happy Customers</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="fw-bold mb-1">4.9★</h3>
+                            <p class="small opacity-75 mb-0">Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image position-relative">
+                    <div class="hero-image-bg"></div>
+                    {% if products.first %}
+                    <img src="{% if products.first.image %}{{ products.first.image.url }}{% else %}{% static 'images/default_product.jpg' %}{% endif %}" 
+                         alt="Featured Product" class="img-fluid hero-product-image">
+                    {% endif %}
+                </div>
             </div>
         </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>
+
+<!-- Modern Features Section -->
+<section class="features-section py-5" style="background: #f8f9fa;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card h-100 text-center p-4 bg-white rounded-3 shadow-sm border-0 h-100">
+                    <div class="feature-icon mb-3">
+                        <div class="icon-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-calendar-check text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-3">Easy Booking</h5>
+                    <p class="text-muted mb-0">Book your perfect outfit with our simple and fast booking system.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card h-100 text-center p-4 bg-white rounded-3 shadow-sm border-0">
+                    <div class="feature-icon mb-3">
+                        <div class="icon-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-truck text-success" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-3">Free Delivery</h5>
+                    <p class="text-muted mb-0">Enjoy free delivery for all orders above $50 within the city.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card h-100 text-center p-4 bg-white rounded-3 shadow-sm border-0">
+                    <div class="feature-icon mb-3">
+                        <div class="icon-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-gift text-warning" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-3">Premium Quality</h5>
+                    <p class="text-muted mb-0">All our products are carefully selected for highest quality standards.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card h-100 text-center p-4 bg-white rounded-3 shadow-sm border-0">
+                    <div class="feature-icon mb-3">
+                        <div class="icon-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center">
+                            <i class="bi bi-arrow-repeat text-info" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-3">Easy Returns</h5>
+                    <p class="text-muted mb-0">30-day return policy with no questions asked guarantee.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modern Collections Section -->
+<section id="collections" class="collections-section py-5">
+    <div class="container">
         <div class="row">
-            <div class="swiper main-swiper py-4" data-aos="fade-up" data-aos-delay="600">
-                <div class="swiper-wrapper d-flex border-animation-left">
-                    {% for product in products %}
-                    <div class="swiper-slide">
-                        <div class="banner-item image-zoom-effect">
-                            <div class="image-holder">
-                                <a href="{% url 'product_detail' product.id %}">
-                                    {% if product.image %}
-                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
-                                    {% else %}
-                                        <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="img-fluid">
-                                    {% endif %}
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
+                    <span class="section-badge badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3">
+                        Featured Collections
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">Discover New Arrivals</h2>
+                    <p class="section-description lead text-muted">Explore our handpicked collection of the latest fashion trends</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collection Grid -->
+        <div class="row g-4 mb-5">
+            {% for product in new_arrivals|slice:":6" %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' '400' '500' '600' %}">
+                <div class="modern-product-card h-100">
+                    <div class="product-image-container position-relative overflow-hidden">
+                        <a href="{% url 'product_detail' product.id %}">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid">
+                            {% else %}
+                            <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="product-image img-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="product-overlay">
+                            <div class="product-actions">
+                                <a href="{% url 'add_to_wishlist' product.id %}" class="action-btn wishlist-btn" title="Add to Wishlist">
+                                    <i class="bi bi-heart"></i>
+                                </a>
+                                <a href="{% url 'product_detail' product.id %}" class="action-btn view-btn" title="Quick View">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'add_to_cart' product.id %}" class="action-btn cart-btn" title="Add to Cart">
+                                    <i class="bi bi-bag-plus"></i>
                                 </a>
                             </div>
-                            <div class="banner-content py-4">
-                                <h5 class="element-title text-uppercase">
-                                    <a href="{% url 'product_detail' product.id %}" class="item-anchor">{{ product.name }}</a>
-                                </h5>
-                                <p>{{ product.description|truncatewords:20 }}</p>
-                                <div class="btn-left">
-                                    <a href="{% url 'product_detail' product.id %}" class="btn-link fs-6 text-uppercase item-anchor text-decoration-none">Discover Now</a>
+                        </div>
+                        {% if forloop.counter <= 3 %}
+                        <span class="product-badge badge bg-danger position-absolute">New</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-content p-4">
+                        <div class="product-category text-muted small text-uppercase mb-2">{{ product.get_category_display }}</div>
+                        <h5 class="product-title fw-bold mb-2">
+                            <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                        </h5>
+                        <p class="product-description text-muted small mb-3">{{ product.description|truncatewords:15 }}</p>
+                        <div class="product-footer d-flex justify-content-between align-items-center">
+                            <div class="product-price">
+                                <span class="price fw-bold text-primary fs-5">${{ product.price }}</span>
+                            </div>
+                            <div class="product-rating">
+                                <div class="stars text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <span class="rating-text small text-muted ms-1">4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center">
+            <a href="{% url 'shop' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-semibold">
+                <i class="bi bi-grid me-2"></i>View All Products
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Modern Bridal Collection Section -->
+<section class="bridal-collection-section py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6">
+                <div class="section-header">
+                    <span class="section-badge badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill mb-3">
+                        💍 Special Collection
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">Bridal Elegance</h2>
+                    <p class="section-description lead text-muted">Discover our exquisite bridal collection designed for your special day</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-end">
+                <a href="{% url 'shop' %}" class="btn btn-outline-primary btn-lg px-4 py-3 rounded-pill fw-semibold">
+                    View All Bridal Dresses <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for dress in bridal_dresses|slice:":4" %}
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{% cycle '150' '300' '450' '600' %}">
+                <div class="bridal-card h-100">
+                    <div class="bridal-image-container position-relative">
+                        <a href="{% url 'product_detail' dress.id %}">
+                            {% if dress.image %}
+                            <img src="{{ dress.image.url }}" alt="{{ dress.name }}" class="bridal-image img-fluid">
+                            {% else %}
+                            <img src="{% static 'images/default_product.jpg' %}" alt="{{ dress.name }}" class="bridal-image img-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="bridal-overlay">
+                            <a href="{% url 'add_to_cart' dress.id %}" class="btn btn-light btn-sm rounded-pill">
+                                <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bridal-content p-3 text-center">
+                        <h6 class="bridal-title fw-bold mb-2">{{ dress.name }}</h6>
+                        <p class="bridal-price text-primary fw-bold mb-0">${{ dress.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Modern Men's Collection Section -->
+<section class="mens-collection-section py-5" style="background: #f8f9fa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
+                    <span class="section-badge badge bg-dark bg-opacity-10 text-dark px-3 py-2 rounded-pill mb-3">
+                        👔 Gentlemen's Choice
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">Men's Fashion</h2>
+                    <p class="section-description lead text-muted">Sophisticated styles for the modern gentleman</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Men's Formal Collection -->
+        <div class="mb-5">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold text-dark">Formal Wear</h3>
+                    <p class="text-muted mb-0">Professional attire for business and special occasions</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'gents' %}" class="btn btn-outline-dark rounded-pill">
+                        View All Men's <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for product in mens_formal|slice:":4" %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="mens-product-card h-100">
+                        <div class="mens-image-container position-relative">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mens-image img-fluid">
+                                {% else %}
+                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="mens-image img-fluid">
+                                {% endif %}
+                            </a>
+                            <div class="mens-overlay">
+                                <div class="mens-actions">
+                                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-dark btn-sm rounded-pill">
+                                        <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <span class="mens-badge badge bg-dark position-absolute">Formal</span>
+                        </div>
+                        <div class="mens-content p-4">
+                            <h6 class="mens-title fw-bold mb-2">{{ product.name }}</h6>
+                            <p class="mens-description text-muted small mb-3">{{ product.description|truncatewords:10 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="mens-price fw-bold text-dark">${{ product.price }}</span>
+                                <div class="mens-rating small text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Men's Casual Collection -->
+        <div class="mb-5">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold text-dark">Casual Wear</h3>
+                    <p class="text-muted mb-0">Comfortable and stylish everyday fashion</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for product in mens_casual|slice:":4" %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="mens-product-card h-100">
+                        <div class="mens-image-container position-relative">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="mens-image img-fluid">
+                                {% else %}
+                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="mens-image img-fluid">
+                                {% endif %}
+                            </a>
+                            <div class="mens-overlay">
+                                <div class="mens-actions">
+                                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-dark btn-sm rounded-pill">
+                                        <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <span class="mens-badge badge bg-info position-absolute">Casual</span>
+                        </div>
+                        <div class="mens-content p-4">
+                            <h6 class="mens-title fw-bold mb-2">{{ product.name }}</h6>
+                            <p class="mens-description text-muted small mb-3">{{ product.description|truncatewords:10 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="mens-price fw-bold text-dark">${{ product.price }}</span>
+                                <div class="mens-rating small text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modern Women's Collection Section -->
+<section class="womens-collection-section py-5" style="background: linear-gradient(135deg, #ffeef8 0%, #f0e6ff 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
+                    <span class="section-badge badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3">
+                        👗 Ladies' Fashion
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">Women's Collection</h2>
+                    <p class="section-description lead text-muted">Elegant and trendy styles for every occasion</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Women's Party Collection -->
+        <div class="mb-5">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold text-primary">Party & Evening</h3>
+                    <p class="text-muted mb-0">Glamorous outfits for special nights and celebrations</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a href="{% url 'ladies' %}" class="btn btn-outline-primary rounded-pill">
+                        View All Women's <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for product in womens_party|slice:":4" %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="womens-product-card h-100">
+                        <div class="womens-image-container position-relative">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="womens-image img-fluid">
+                                {% else %}
+                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="womens-image img-fluid">
+                                {% endif %}
+                            </a>
+                            <div class="womens-overlay">
+                                <div class="womens-actions">
+                                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm rounded-pill">
+                                        <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <span class="womens-badge badge bg-danger position-absolute">Party</span>
+                        </div>
+                        <div class="womens-content p-4">
+                            <h6 class="womens-title fw-bold mb-2">{{ product.name }}</h6>
+                            <p class="womens-description text-muted small mb-3">{{ product.description|truncatewords:10 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="womens-price fw-bold text-primary">${{ product.price }}</span>
+                                <div class="womens-rating small text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Women's Casual Collection -->
+        <div class="mb-5">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-8">
+                    <h3 class="fw-bold text-primary">Casual & Everyday</h3>
+                    <p class="text-muted mb-0">Comfortable chic for daily wear and relaxed occasions</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for product in womens_casual|slice:":4" %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="womens-product-card h-100">
+                        <div class="womens-image-container position-relative">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="womens-image img-fluid">
+                                {% else %}
+                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="womens-image img-fluid">
+                                {% endif %}
+                            </a>
+                            <div class="womens-overlay">
+                                <div class="womens-actions">
+                                    <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm rounded-pill">
+                                        <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <span class="womens-badge badge bg-success position-absolute">Casual</span>
+                        </div>
+                        <div class="womens-content p-4">
+                            <h6 class="womens-title fw-bold mb-2">{{ product.name }}</h6>
+                            <p class="womens-description text-muted small mb-3">{{ product.description|truncatewords:10 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="womens-price fw-bold text-primary">${{ product.price }}</span>
+                                <div class="womens-rating small text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modern Best Sellers Section -->
+<section class="bestsellers-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center mb-5">
+                    <span class="section-badge badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill mb-3">
+                        🔥 Trending Now
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">Best Sellers</h2>
+                    <p class="section-description lead text-muted">The most loved items by our customers</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bestsellers-carousel">
+            <div class="swiper bestsellers-swiper">
+                <div class="swiper-wrapper">
+                    {% for product in best_sellers %}
+                    <div class="swiper-slide">
+                        <div class="bestseller-card">
+                            <div class="bestseller-image-container position-relative">
+                                <a href="{% url 'product_detail' product.id %}">
+                                    {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="bestseller-image img-fluid">
+                                    {% else %}
+                                    <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="bestseller-image img-fluid">
+                                    {% endif %}
+                                </a>
+                                <span class="bestseller-badge badge bg-success position-absolute">Best Seller</span>
+                                <div class="bestseller-overlay">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'add_to_wishlist' product.id %}" class="btn btn-light btn-sm rounded-circle">
+                                            <i class="bi bi-heart"></i>
+                                        </a>
+                                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm rounded-circle">
+                                            <i class="bi bi-bag-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bestseller-content p-3">
+                                <h6 class="bestseller-title fw-bold mb-2">
+                                    <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                                </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="bestseller-price fw-bold text-primary">${{ product.price }}</span>
+                                    <div class="bestseller-rating small text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -40,646 +547,751 @@
                     {% endfor %}
                 </div>
                 <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-            <div class="icon-arrow icon-arrow-left"><svg width="50" height="50" viewBox="0 0 24 24">
-                <use xlink:href="#arrow-left"></use>
-            </svg></div>
-            <div class="icon-arrow icon-arrow-right"><svg width="50" height="50" viewBox="0 0 24 24">
-                <use xlink:href="#arrow-right"></use>
-            </svg></div>
         </div>
     </div>
 </section>
 
- <section class="features py-5">
-  <div class="container">
-    <div class="row">
-      <!-- Book An Appointment Section -->
-      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="0">
-        <div class="py-5">
-          <a href="/appointment" class="d-block text-decoration-none">
-            <svg width="38" height="38" viewBox="0 0 24 24">
-              <use xlink:href="#calendar"></use>
-            </svg>
-            <h4 class="element-title text-capitalize my-3">Book An Appointment</h4>
-            <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-          </a>
-        </div>
-      </div>
-      
-      <!-- Other Features -->
-      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="300">
-        <div class="py-5">
-          <svg width="38" height="38" viewBox="0 0 24 24">
-            <use xlink:href="#shopping-bag"></use>
-          </svg>
-          <h4 class="element-title text-capitalize my-3">Pick up in store</h4>
-          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-        </div>
-      </div>
-      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="600">
-        <div class="py-5">
-          <svg width="38" height="38" viewBox="0 0 24 24">
-            <use xlink:href="#gift"></use>
-          </svg>
-          <h4 class="element-title text-capitalize my-3">Special packaging</h4>
-          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-        </div>
-      </div>
-      <div class="col-md-3 text-center" data-aos="fade-in" data-aos-delay="900">
-        <div class="py-5">
-          <svg width="38" height="38" viewBox="0 0 24 24">
-            <use xlink:href="#arrow-cycle"></use>
-          </svg>
-          <h4 class="element-title text-capitalize my-3">Free global returns</h4>
-          <p>At imperdiet dui accumsan sit amet nulla risus est ultricies quis.</p>
-        </div>
-      </div>
-    </div>
-<<<<<<< HEAD
-  </div>
-</section>
-
-=======
-  </section>
-  <!-- templates/home.html -->
->>>>>>> 8bba446aa66a69ef2fc7726caaddb3a7c960d3f4
-
-<section id="new-arrival-bridal-dress" class="new-arrival-bridal-dress product-carousel py-5 position-relative overflow-hidden">
+<!-- Modern Testimonials Section -->
+<section class="testimonials-section py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
     <div class="container">
-        <div class="d-flex flex-wrap justify-content-between align-items-center mt-5 mb-3">
-            <h4 class="text-uppercase">Our New Arrivals Bridal Dress</h4>
-            <a href="{% url 'shop' %}" class="btn-link">View All Dresses</a>
-        </div>
-        <div class="swiper product-swiper open-up" data-aos="zoom-out">
-            <div class="swiper-wrapper d-flex">
-                {% for product in bridal_dresses %}
-                <div class="swiper-slide">
-                    <div class="product-item image-zoom-effect link-effect">
-                        <div class="image-holder position-relative">
-                            <a href="{% url 'product_detail' product.id %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid">
-                                {% else %}
-                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="product-image img-fluid">
-                                {% endif %}
-                            </a>
-                            <a href="{% url 'add_to_wishlist' product.id %}" class="btn-icon btn-wishlist">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlink:href="#heart"></use>
-                                </svg>
-                            </a>
-                            <div class="product-content">
-                                <h5 class="element-title text-uppercase fs-5 mt-3">
-                                    <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
-                                </h5>
-                                <a href="{% url 'add_to_cart' product.id %}" class="text-decoration-none" data-after="Add to cart">
-                                    <span>${{ product.price }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-        <div class="icon-arrow icon-arrow-left"><svg width="50" height="50" viewBox="0 0 24 24">
-            <use xlink:href="#arrow-left"></use>
-        </svg></div>
-        <div class="icon-arrow icon-arrow-right"><svg width="50" height="50" viewBox="0 0 24 24">
-            <use xlink:href="#arrow-right"></use>
-        </svg></div>
-    </div>
-</section>
-
-  <section id="best-sellers" class="best-sellers product-carousel py-5 position-relative overflow-hidden">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between align-items-center mt-5 mb-3">
-            <h4 class="text-uppercase">Best Selling Items</h4>
-            <a href="{% url 'shop' %}" class="btn-link">View All Products</a>
-        </div>
-        <div class="swiper product-swiper open-up" data-aos="zoom-out">
-            <div class="swiper-wrapper d-flex">
-                {% for product in best_sellers %}
-                <div class="swiper-slide">
-                    <div class="product-item image-zoom-effect link-effect">
-                        <div class="image-holder position-relative">
-                            <a href="{% url 'product_detail' product.id %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image img-fluid">
-                                {% else %}
-                                <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="product-image img-fluid">
-                                {% endif %}
-                            </a>
-                            <a href="{% url 'add_to_wishlist' product.id %}" class="btn-icon btn-wishlist">
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlink:href="#heart"></use>
-                                </svg>
-                            </a>
-                            <div class="product-content">
-                                <h5 class="text-uppercase fs-5 mt-3">
-                                    <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
-                                </h5>
-                                <a href="{% url 'add_to_cart' product.id %}" class="text-decoration-none" data-after="Add to cart">
-                                    <span>${{ product.price }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-        <div class="icon-arrow icon-arrow-left"><svg width="50" height="50" viewBox="0 0 24 24">
-            <use xlink:href="#arrow-left"></use>
-        </svg></div>
-        <div class="icon-arrow icon-arrow-right"><svg width="50" height="50" viewBox="0 0 24 24">
-            <use xlink:href="#arrow-right"></use>
-        </svg></div>
-    </div>
-</section>
-
-
-  <section class="testimonials py-5 bg-light">
-  <div class="section-header text-center mt-5">
-    <h5 class="section-title font-weight-bold text-dark">Customer Reviews</h5>
-  </div>
-  <div class="swiper testimonial-swiper overflow-hidden my-5">
-    <!-- Left Arrow -->
-    <div class="swiper-button-prev"></div>
-    
-    <div class="swiper-wrapper d-flex">
-      <!-- Testimonial 1 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“More than expected – crazy soft, flexible, and perfectly fitted white denim shirt.”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">Casual Way</footer>
-          </blockquote>
-        </div>
-      </div>
-      <!-- Testimonial 2 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“Best fitted white denim shirt – more than expected, crazy soft and flexible.”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">Uptop</footer>
-          </blockquote>
-        </div>
-      </div>
-      <!-- Testimonial 3 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“Flexible, crazy soft, and perfectly fitted white denim shirt beyond expectations.”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">Denim Craze</footer>
-          </blockquote>
-        </div>
-      </div>
-      <!-- Testimonial 4 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“Best fitted, flexible, and ultra-soft white denim shirt. Exceeded all expectations.”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">Uptop</footer>
-          </blockquote>
-        </div>
-      </div>
-      <!-- Testimonial 5 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“I was surprised by the softness and perfect fit of the denim shirt. Highly recommend!”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">Urban Trend</footer>
-          </blockquote>
-        </div>
-      </div>
-      <!-- Testimonial 6 -->
-      <div class="swiper-slide">
-        <div class="testimonial-item text-center px-4">
-          <blockquote class="blockquote text-center">
-            <p class="testimonial-text">“The white denim shirt exceeded my expectations in both comfort and style. Amazing quality!”</p>
-            <footer class="blockquote-footer text-uppercase font-weight-bold">White Charm</footer>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-    <!-- Right Arrow -->
-    <div class="swiper-button-next"></div>
-  </div>
-  <div class="testimonial-swiper-pagination d-flex justify-content-center mb-5"></div>
-</section>
-
-
-
-  <section id="related-products" class="related-products product-carousel py-5 position-relative overflow-hidden">
-    <div class="container">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mt-5 mb-3">
-        <h4 class="text-uppercase">You May Also Like</h4>
-        <a href="" class="btn-link">View All Products</a>
-      </div>
-      <div class="swiper product-swiper open-up" data-aos="zoom-out">
-        <div class="swiper-wrapper d-flex">
-          <div class="swiper-slide">
-            <div class="product-item image-zoom-effect link-effect">
-              <div class="image-holder">
-                <a href="">
-                  <img src="{% static 'images/product-item-5.jpg' %}" alt="product" class="product-image img-fluid">
-                </a>
-                <a href="" class="btn-icon btn-wishlist">
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <use xlink:href="#heart"></use>
-                  </svg>
-                </a>
-                <div class="product-content">
-                  <h5 class="text-uppercase fs-5 mt-3">
-                    <a href="">Dark florish onepiece</a>
-                  </h5>
-                  <a href="" class="text-decoration-none" data-after="Add to cart"><span>$95.00</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="product-item image-zoom-effect link-effect">
-              <div class="image-holder">
-                <a href="">
-                  <img src="{% static 'images/product-item-6.jpg' %}" alt="product" class="product-image img-fluid">
-                </a>
-                <a href="" class="btn-icon btn-wishlist">
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <use xlink:href="#heart"></use>
-                  </svg>
-                </a>
-                <div class="product-content">
-                  <h5 class="text-uppercase fs-5 mt-3">
-                    <a href="">Lehengga</a>
-                  </h5>
-                  <a href="" class="text-decoration-none" data-after="Add to cart"><span>$55.00</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="product-item image-zoom-effect link-effect">
-              <div class="image-holder">
-                <a href="">
-                  <img src="{% static 'images/product-item-7.jpg' %}" alt="product" class="product-image img-fluid">
-                </a>
-                <a href="" class="btn-icon btn-wishlist">
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <use xlink:href="#heart"></use>
-                  </svg>
-                </a>
-                <div class="product-content">
-                  <h5 class="text-uppercase fs-5 mt-3">
-                    <a href="">Lehengga</a>
-                  </h5>
-                  <a href="" class="text-decoration-none" data-after="Add to cart"><span>$65.00</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="product-item image-zoom-effect link-effect">
-              <div class="image-holder">
-                <a href="">
-                  <img src="{% static 'images/product-item-8.jpg' %}" alt="product" class="product-image img-fluid">
-                </a>
-                <a href="" class="btn-icon btn-wishlist">
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <use xlink:href="#heart"></use>
-                  </svg>
-                </a>
-                <div class="product-content">
-                  <h5 class="text-uppercase fs-5 mt-3">
-                    <a href="">Lehengga</a>
-                  </h5>
-                  <a href="" class="text-decoration-none" data-after="Add to cart"><span>$50.00</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="product-item image-zoom-effect link-effect">
-              <div class="image-holder">
-                <a href="">
-                  <img src="{% static 'images/product-item-1.jpg' %}" alt="product" class="product-image img-fluid">
-                </a>
-                <a href="" class="btn-icon btn-wishlist">
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <use xlink:href="#heart"></use>
-                  </svg>
-                </a>
-                <div class="product-content">
-                  <h5 class="text-uppercase fs-5 mt-3">
-                    <a href="">Lehengga</a>
-                  </h5>
-                  <a href="" class="text-decoration-none" data-after="Add to cart"><span>$70.00</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-      <div class="icon-arrow icon-arrow-left"><svg width="50" height="50" viewBox="0 0 24 24">
-          <use xlink:href="#arrow-left"></use>
-        </svg></div>
-      <div class="icon-arrow icon-arrow-right"><svg width="50" height="50" viewBox="0 0 24 24">
-          <use xlink:href="#arrow-right"></use>
-        </svg></div>
-    </div>
-  </section>
-
-  <section class="blog py-5">
-    <div class="container">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mt-5 mb-3">
-        <h4 class="text-uppercase">Read Blog Posts</h4>
-        <a href="" class="btn-link">View All</a>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <article class="post-item">
-            <div class="post-image">
-              <a href="">
-                <img src="{% static 'images/post-image1.jpg' %}" alt="image" class="post-grid-image img-fluid">
-              </a>
-            </div>
-            <div class="post-content d-flex flex-wrap gap-2 my-3">
-              <div class="post-meta text-uppercase fs-6 text-secondary">
-                <span class="post-category">Fashion /</span>
-                <span class="meta-day"> jul 11, 2022</span>
-              </div>
-              <h5 class="post-title text-uppercase">
-                <a href="">How to look outstanding in pastel</a>
-              </h5>
-              <p>Dignissim lacus,turpis ut suspendisse vel tellus.Turpis purus,gravida orci,fringilla...</p>
-            </div>
-          </article>
-        </div>
-        <div class="col-md-4">
-          <article class="post-item">
-            <div class="post-image">
-              <a href="">
-                <img src="{% static 'images/post-image2.jpg' %}" alt="image" class="post-grid-image img-fluid">
-              </a>
-            </div>
-            <div class="post-content d-flex flex-wrap gap-2 my-3">
-              <div class="post-meta text-uppercase fs-6 text-secondary">
-                <span class="post-category">Fashion /</span>
-                <span class="meta-day"> jul 11, 2022</span>
-              </div>
-              <h5 class="post-title text-uppercase">
-                <a href="">Top 10 fashion trend for summer</a>
-              </h5>
-              <p>Turpis purus, gravida orci, fringilla dignissim lacus, turpis ut suspendisse vel tellus...</p>
-            </div>
-          </article>
-        </div>
-        <div class="col-md-4">
-          <article class="post-item">
-            <div class="post-image">
-              <a href="">
-                <img src="{% static 'images/post-image3.jpg' %}" alt="image" class="post-grid-image img-fluid">
-              </a>
-            </div>
-            <div class="post-content d-flex flex-wrap gap-2 my-3">
-              <div class="post-meta text-uppercase fs-6 text-secondary">
-                <span class="post-category">Fashion /</span>
-                <span class="meta-day"> jul 11, 2022</span>
-              </div>
-              <h5 class="post-title text-uppercase">
-                <a href="">Crazy fashion with unique moment</a>
-              </h5>
-              <p>Turpis purus, gravida orci, fringilla dignissim lacus, turpis ut suspendisse vel tellus...</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="logo-bar py-5 my-5">
-    <div class="container">
-      <div class="row">
-        <div class="logo-content d-flex flex-wrap justify-content-between">
-          <img src="{% static 'images/logo1.png' %}" alt="logo" class="logo-image img-fluid">
-          <img src="{% static 'images/logo2.png' %}" alt="logo" class="logo-image img-fluid">
-          <img src="{% static 'images/logo3.png' %}" alt="logo" class="logo-image img-fluid">
-          <img src="{% static 'images/logo4.png' %}" alt="logo" class="logo-image img-fluid">
-          <img src="{% static 'images/logo5.png' %}" alt="logo" class="logo-image img-fluid">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="newsletter bg-light" style="background: url(images/pattern-bg.png) no-repeat;">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8 py-5 my-5">
-          <div class="subscribe-header text-center pb-3">
-            <h3 class="section-title text-uppercase">Sign Up for our newsletter</h3>
-          </div>
-          <form id="form" class="d-flex flex-wrap gap-2">
-            <input type="text" name="email" placeholder="Your Email Addresss" class="form-control form-control-lg">
-            <button class="btn btn-dark btn-lg text-uppercase w-100">Sign Up</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="instagram position-relative">
-    <div class="d-flex justify-content-center w-100 position-absolute bottom-0 z-1">
-      <a href="https://www.instagram.com" class="btn btn-dark px-5">Follow us on Instagram</a>
-    </div>
-    <div class="row g-0">
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item1.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item2.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item3.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item4.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item5.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-sm-4 col-md-2">
-        <div class="insta-item">
-          <a href="https://www.instagram.com/templatesjungle/" target="_blank">
-            <img src="{% static 'images/insta-item6.jpg' %}" alt="instagram" class="insta-image img-fluid">
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer id="footer" class="mt-5">
-    <div class="container">
-      <div class="row d-flex flex-wrap justify-content-between py-5">
-        <div class="col-md-3 col-sm-6">
-          <div class="footer-menu footer-menu-001">
-            <div class="footer-intro mb-4">
-              <a href="">
-                 <h5 class="widget-title text-uppercase mb-4">Style Hire</h5>
-              </a>
-            </div>
-            <p>'Style Hire' makes fashion accessible, affordable, and sustainable by offering a wide range of trendy clothing for rent. Whether you're dressing up for a special occasion or refreshing your wardrobe, we’re here to provide stylish options for every need.</p>
-            <div class="social-links">
-              <ul class="list-unstyled d-flex flex-wrap gap-3">
-                <li>
-                  <a href="#" class="text-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <use xlink:href="#facebook"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="text-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <use xlink:href="#twitter"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="text-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <use xlink:href="#youtube"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="text-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <use xlink:href="#pinterest"></use>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="text-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <use xlink:href="#instagram"></use>
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="footer-menu footer-menu-002">
-            <h5 class="widget-title text-uppercase mb-4">Quick Links</h5>
-            <ul class="menu-list list-unstyled text-uppercase border-animation-left fs-6">
-              <li class="menu-item">
-                <a href="" class="item-anchor">Home</a>
-              </li>
-              <li class="menu-item">
-                <a href="" class="item-anchor">About</a>
-              </li>
-              <li class="menu-item">
-                <a href="blog.html" class="item-anchor">Services</a>
-              </li>
-              <li class="menu-item">
-                <a href="styles.html" class="item-anchor">Single item</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="footer-menu footer-menu-003">
-            <h5 class="widget-title text-uppercase mb-4">Help & Info</h5>
-            <ul class="menu-list list-unstyled text-uppercase border-animation-left fs-6">
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Track Your Order</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Returns + Exchanges</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Shipping + Delivery</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Contact Us</a>
-              </li>
-              <li class="menu-item">
-                <a href="#" class="item-anchor">Find us easy</a>
-              </li>
-              <li class="menu-item">
-                <a href="" class="item-anchor">Faqs</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="footer-menu footer-menu-004 border-animation-left">
-  <h5 class="widget-title text-uppercase mb-4">Contact Us</h5>
-  <p>Do you have any questions or suggestions? <a href="mailto:contact@yourcompany.com" class="item-anchor">
-      <p>22101082@uap-bd.edu</p>
-      <p>22101084@uap-bd.edu</p>
-      <p>22101085@uap-bd.edu</p></a></p>
-              
-              <p>Do you need support? Give us a call. <a href="tel:+880 1622433606" class="item-anchor"><p>+880 1622433606</p></a>
-</div>
-
-
-        </div>
-      </div>
-    </div>
-    <div class="border-top py-4">
-      <div class="container">
         <div class="row">
-          <div class="col-md-6 d-flex flex-wrap">
-            <div class="shipping">
-              <span>We ship with:</span>
-              <img src="{% static 'images/arct-icon.png' %}" alt="icon">
-              <img src="{% static 'images/dhl-logo.png' %}" alt="icon">
+            <div class="col-12">
+                <div class="section-header text-center mb-5 text-white">
+                    <span class="section-badge badge bg-light text-primary px-3 py-2 rounded-pill mb-3">
+                        💬 Customer Reviews
+                    </span>
+                    <h2 class="section-title display-4 fw-bold mb-3">What Our Customers Say</h2>
+                    <p class="section-description lead opacity-90">Real feedback from our satisfied customers</p>
+                </div>
             </div>
-            <div class="payment-option">
-              <span>Payment Option:</span>
-              <img src="{% static 'images/visa-card.png' %}" alt="card">
-              
-              <img src="{% static 'images/master-card.png' %}" alt="card">
-            </div>
-          </div>
-          <div class="col-md-6 text-end">
-            <p>© Copyright 2024 StyleHire. All rights reserved.</p>
-            <p>Design by Mumito, Labony, Apon</p>
-          </div>
-
         </div>
-      </div>
+
+        <div class="testimonials-carousel">
+            <div class="swiper testimonials-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-card bg-white rounded-4 p-5 text-center shadow-lg">
+                            <div class="testimonial-avatar mb-4">
+                                <img src="{% static 'images/avatar1.jpg' %}" alt="Customer" class="rounded-circle" width="80" height="80">
+                            </div>
+                            <div class="testimonial-rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <blockquote class="testimonial-text fs-5 mb-4 text-muted">
+                                "Amazing quality and perfect fit! The dress exceeded my expectations and I received so many compliments."
+                            </blockquote>
+                            <cite class="testimonial-author fw-bold">Sarah Johnson</cite>
+                            <div class="testimonial-title small text-muted">Wedding Guest</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card bg-white rounded-4 p-5 text-center shadow-lg">
+                            <div class="testimonial-avatar mb-4">
+                                <img src="{% static 'images/avatar2.jpg' %}" alt="Customer" class="rounded-circle" width="80" height="80">
+                            </div>
+                            <div class="testimonial-rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            </div>
+                            <blockquote class="testimonial-text fs-5 mb-4 text-muted">
+                                "Fantastic service and beautiful collection. The delivery was fast and the packaging was excellent."
+                            </blockquote>
+                            <cite class="testimonial-author fw-bold">Emily Davis</cite>
+                            <div class="testimonial-title small text-muted">Bride</div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-card bg-white rounded-4 p-5 text-center shadow-lg">
+                            <div class="testimonial-avatar mb-4">
+                                <img src="{% static 'images/avatar3.jpg' %}" alt="Customer" class="rounded-circle" width="80" height="80">
+                            </div>
+                            <div class="testimonial-rating mb-3">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                            </div>
+                            <blockquote class="testimonial-text fs-5 mb-4 text-muted">
+                                "Love the variety and quality! Style Hire has become my go-to place for special occasion outfits."
+                            </blockquote>
+                            <cite class="testimonial-author fw-bold">Jessica Wilson</cite>
+                            <div class="testimonial-title small text-muted">Fashion Enthusiast</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
     </div>
-  </footer>
+</section>
+
+<!-- Modern Newsletter Section -->
+<section class="newsletter-section py-5" style="background: #f8f9fa;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="newsletter-content text-center">
+                    <div class="newsletter-icon mb-4">
+                        <div class="icon-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="bi bi-envelope-heart text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                    </div>
+                    <h3 class="newsletter-title display-5 fw-bold mb-3">Stay in Style</h3>
+                    <p class="newsletter-description lead text-muted mb-4">Subscribe to our newsletter and be the first to know about new collections, exclusive offers, and fashion tips.</p>
+                    <form class="newsletter-form row g-3 justify-content-center">
+                        <div class="col-md-6">
+                            <input type="email" class="form-control form-control-lg rounded-pill px-4" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="col-md-auto">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-semibold">
+                                <i class="bi bi-send me-2"></i>Subscribe
+                            </button>
+                        </div>
+                    </form>
+                    <small class="newsletter-note text-muted mt-3 d-block">
+                        <i class="bi bi-shield-check me-1"></i>We respect your privacy. Unsubscribe at any time.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom CSS for Modern Design -->
+<style>
+/* Hero Section Styles */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.1;
+}
+
+.shape-1 {
+    width: 200px;
+    height: 200px;
+    background: white;
+    border-radius: 50%;
+    top: 10%;
+    right: 20%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    bottom: 20%;
+    left: 10%;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    top: 60%;
+    right: 10%;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-product-image {
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    transform: rotate(-5deg);
+    transition: transform 0.3s ease;
+}
+
+.hero-product-image:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+}
+
+.scroll-arrow {
+    width: 2px;
+    height: 30px;
+    background: white;
+    position: relative;
+    animation: scroll 2s infinite;
+}
+
+.scroll-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -3px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+}
+
+@keyframes scroll {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Feature Cards */
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+/* Modern Product Cards */
+.modern-product-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.modern-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.product-image-container {
+    height: 300px;
+    border-radius: 20px 20px 0 0;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modern-product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.product-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.action-btn {
+    width: 45px;
+    height: 45px;
+    background: white;
+    color: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: var(--bs-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.product-badge {
+    top: 15px;
+    left: 15px;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+}
+
+/* Bridal Cards */
+.bridal-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.bridal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+}
+
+.bridal-image-container {
+    height: 350px;
+    overflow: hidden;
+}
+
+.bridal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.bridal-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bridal-card:hover .bridal-overlay {
+    opacity: 1;
+}
+
+.bridal-card:hover .bridal-image {
+    transform: scale(1.1);
+}
+
+/* Bestseller Cards */
+.bestseller-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.bestseller-image-container {
+    height: 250px;
+    overflow: hidden;
+}
+
+.bestseller-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.bestseller-badge {
+    top: 10px;
+    right: 10px;
+    font-size: 0.7rem;
+}
+
+.bestseller-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bestseller-card:hover .bestseller-overlay {
+    opacity: 1;
+}
+
+.bestseller-card:hover .bestseller-image {
+    transform: scale(1.1);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Testimonial Cards */
+.testimonial-card {
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Newsletter */
+.newsletter-form input {
+    border: 2px solid #e9ecef;
+}
+
+.newsletter-form input:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+    
+    .section-title {
+        font-size: 2rem !important;
+    }
+    
+    .product-image-container {
+        height: 250px;
+    }
+    
+    .bridal-image-container {
+        height: 300px;
+    }
+    
+    .bestseller-image-container {
+        height: 200px;
+    }
+    
+    .mens-image-container {
+        height: 250px;
+    }
+    
+    .womens-image-container {
+        height: 250px;
+    }
+}
+
+/* Swiper Customization */
+.swiper-button-next,
+.swiper-button-prev {
+    color: var(--bs-primary);
+    background: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.swiper-pagination-bullet {
+    background: var(--bs-primary);
+    opacity: 0.3;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Men's Collection Styles */
+.mens-product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.mens-product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.mens-image-container {
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mens-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.mens-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mens-product-card:hover .mens-overlay {
+    opacity: 1;
+}
+
+.mens-product-card:hover .mens-image {
+    transform: scale(1.1);
+}
+
+.mens-badge {
+    top: 15px;
+    left: 15px;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+}
+
+.mens-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Women's Collection Styles */
+.womens-product-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.womens-product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.womens-image-container {
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+
+.womens-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.womens-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.womens-product-card:hover .womens-overlay {
+    opacity: 1;
+}
+
+.womens-product-card:hover .womens-image {
+    transform: scale(1.1);
+}
+
+.womens-badge {
+    top: 15px;
+    left: 15px;
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.womens-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/* Collection Section Backgrounds */
+.mens-collection-section {
+    position: relative;
+}
+
+.mens-collection-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="%23000" opacity="0.1"/><circle cx="30" cy="30" r="1" fill="%23000" opacity="0.1"/><circle cx="60" cy="60" r="1" fill="%23000" opacity="0.1"/><circle cx="90" cy="90" r="1" fill="%23000" opacity="0.1"/></svg>');
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.mens-collection-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.womens-collection-section {
+    position: relative;
+}
+
+.womens-collection-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="10,10 20,30 0,30" fill="%23667eea" opacity="0.1"/><polygon points="50,20 60,40 40,40" fill="%23764ba2" opacity="0.1"/><polygon points="80,60 90,80 70,80" fill="%23667eea" opacity="0.1"/></svg>');
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.womens-collection-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Enhanced Hover Effects */
+.mens-product-card .mens-content {
+    transition: all 0.3s ease;
+}
+
+.mens-product-card:hover .mens-content {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.womens-product-card .womens-content {
+    transition: all 0.3s ease;
+}
+
+.womens-product-card:hover .womens-content {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+}
+
+/* Additional Animation for Badges */
+.mens-badge, .womens-badge {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+</style>
+
+<!-- Custom JavaScript for Swiper -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Bestsellers Swiper
+    new Swiper('.bestsellers-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    });
+
+    // Testimonials Swiper
+    new Swiper('.testimonials-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+    });
+});
+</script>
 
 {% endblock %}

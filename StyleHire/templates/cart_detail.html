@@ -85,12 +85,49 @@
         <!-- Payment Method -->
         <div class="mb-3">
           <label class="form-label">Payment Method</label>
-          <select class="form-select" name="payment_method" required>
+          <select class="form-select" name="payment_method" id="payment_method" required>
+            <option value="bkash">bKash (বিকাশ)</option>
+            <option value="nagad">Nagad (নগদ)</option>
+            <option value="rocket">Rocket (রকেট)</option>
             <option value="cod">Cash on Delivery</option>
             <option value="card">Credit/Debit Card</option>
             <option value="paypal">PayPal</option>
-            <!-- Add more options as needed -->
           </select>
+          
+          <!-- Payment Instructions -->
+          <div id="payment-instructions" class="mt-2">
+            <div id="bkash-info" class="payment-info alert alert-info">
+              <strong>bKash Payment Instructions:</strong><br>
+              • Send money to: 01712-345678<br>
+              • Reference: Your Order ID will be provided<br>
+              • Transaction fee may apply
+            </div>
+            <div id="nagad-info" class="payment-info alert alert-info" style="display:none;">
+              <strong>Nagad Payment Instructions:</strong><br>
+              • Send money to: 01812-345678<br>
+              • Reference: Your Order ID will be provided
+            </div>
+            <div id="rocket-info" class="payment-info alert alert-info" style="display:none;">
+              <strong>Rocket Payment Instructions:</strong><br>
+              • Send money to: 01912-345678<br>
+              • Reference: Your Order ID will be provided
+            </div>
+            <div id="cod-info" class="payment-info alert alert-success" style="display:none;">
+              <strong>Cash on Delivery:</strong><br>
+              • Pay when you receive your items<br>
+              • Delivery charge: ৳50-100 (depending on location)
+            </div>
+            <div id="card-info" class="payment-info alert alert-warning" style="display:none;">
+              <strong>Card Payment:</strong><br>
+              • Secure payment through our payment processor<br>
+              • Visa, MasterCard, and local cards accepted
+            </div>
+            <div id="paypal-info" class="payment-info alert alert-primary" style="display:none;">
+              <strong>PayPal Payment:</strong><br>
+              • Secure international payment option<br>
+              • USD conversion rates apply
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -107,7 +144,26 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const csrftoken = '{{ csrf_token }}';
+    
+    // Payment method selection handler
+    const paymentMethodSelect = document.getElementById('payment_method');
+    const paymentInfos = document.querySelectorAll('.payment-info');
+    
+    paymentMethodSelect.addEventListener('change', function() {
+        // Hide all payment info divs
+        paymentInfos.forEach(info => {
+            info.style.display = 'none';
+        });
+        
+        // Show the selected payment method info
+        const selectedMethod = this.value;
+        const selectedInfo = document.getElementById(selectedMethod + '-info');
+        if (selectedInfo) {
+            selectedInfo.style.display = 'block';
+        }
+    });
 
+    // Cart update functionality
     document.querySelectorAll('.btn-increment').forEach(function(button) {
         button.addEventListener('click', function() {
             const tr = this.closest('tr');

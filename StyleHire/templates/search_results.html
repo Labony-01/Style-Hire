@@ -1,0 +1,517 @@
+<!-- templates/search_results.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  {% load static %}
+
+<!-- Modern Search Results Hero Section -->
+<section class="search-hero-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60px 0 40px; position: relative; overflow: hidden;">
+    <div class="search-hero-shapes">
+        <div class="search-shape search-shape-1"></div>
+        <div class="search-shape search-shape-2"></div>
+        <div class="search-shape search-shape-3"></div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-10 mx-auto text-center">
+                <div class="search-header-content">
+                    <span class="search-badge badge bg-light text-primary px-3 py-2 rounded-pill mb-3 fs-6">
+                        <i class="bi bi-search me-2"></i>Search Results
+                    </span>
+                    {% if query %}
+                    <h1 class="search-title display-4 fw-bold text-white mb-3">
+                        Results for "{{ query }}"
+                    </h1>
+                    <p class="search-description lead text-white opacity-90 mb-4">
+                        Found {{ total_results }} item{{ total_results|pluralize }} matching your search
+                    </p>
+                    {% else %}
+                    <h1 class="search-title display-4 fw-bold text-white mb-3">
+                        Search Products
+                    </h1>
+                    <p class="search-description lead text-white opacity-90 mb-4">
+                        Enter a search term to find your perfect outfit
+                    </p>
+                    {% endif %}
+                    
+                    <!-- Enhanced Search Bar -->
+                    <div class="search-bar-container mt-4">
+                        <form method="get" action="{% url 'search' %}" class="search-form-modern">
+                            <div class="search-input-wrapper position-relative">
+                                <input type="search" name="s" value="{{ query }}" 
+                                       class="form-control search-input-modern" 
+                                       placeholder="Search for products, categories, styles..."
+                                       autocomplete="off">
+                                <button type="submit" class="search-btn-modern">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if query %}
+<!-- Search Statistics and Filters -->
+<section class="search-stats-section py-4" style="background: #f8f9fa; border-bottom: 1px solid #e9ecef;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="search-stats d-flex align-items-center gap-3">
+                    <div class="stat-item">
+                        <span class="stat-number fw-bold text-primary">{{ total_results }}</span>
+                        <span class="stat-label text-muted">Result{{ total_results|pluralize }}</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label text-muted">Search: "{{ query }}"</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-end">
+                <div class="search-actions d-flex justify-content-end gap-2">
+                    <select class="form-select search-sort-select" id="sortSearchResults">
+                        <option value="relevance">Sort by Relevance</option>
+                        <option value="name">Name A-Z</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Results Grid -->
+<section class="search-results-section py-5">
+    <div class="container">
+        {% if products %}
+        <div class="row g-4" id="searchResultsGrid">
+            {% for product in products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 search-result-item" 
+                 data-category="{{ product.category }}"
+                 data-price="{{ product.price }}"
+                 data-name="{{ product.name|lower }}"
+                 data-created="{{ product.created_at|date:'Y-m-d' }}">
+                <div class="modern-search-card h-100">
+                    <div class="search-image-container position-relative overflow-hidden">
+                        <a href="{% url 'product_detail' product.id %}">
+                            {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="search-image img-fluid">
+                            {% else %}
+                            <img src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}" class="search-image img-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="search-overlay">
+                            <div class="search-actions">
+                                <a href="{% url 'add_to_wishlist' product.id %}" class="search-action-btn" title="Add to Wishlist">
+                                    <i class="bi bi-heart"></i>
+                                </a>
+                                <a href="{% url 'product_detail' product.id %}" class="search-action-btn" title="Quick View">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'add_to_cart' product.id %}" class="search-action-btn" title="Add to Cart">
+                                    <i class="bi bi-bag-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="search-badges">
+                            {% if product.category == 'bridal' %}
+                            <span class="search-badge badge bg-danger">Special</span>
+                            {% elif product.category == 'party' %}
+                            <span class="search-badge badge bg-warning">Party</span>
+                            {% elif product.category == 'formal' %}
+                            <span class="search-badge badge bg-info">Formal</span>
+                            {% else %}
+                            <span class="search-badge badge bg-primary">{{ product.get_category_display }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="search-content p-4">
+                        <div class="search-category text-muted small text-uppercase mb-2">
+                            {{ product.get_category_display }} • {{ product.get_gender_display }}
+                        </div>
+                        <h5 class="search-title fw-bold mb-2">
+                            <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">{{ product.name }}</a>
+                        </h5>
+                        <p class="search-description text-muted small mb-3">{{ product.description|truncatewords:12 }}</p>
+                        <div class="search-footer d-flex justify-content-between align-items-center mb-3">
+                            <div class="search-price">
+                                <span class="price fw-bold text-primary fs-5">${{ product.price }}</span>
+                            </div>
+                            <div class="search-rating">
+                                <div class="stars text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="rating-text small text-muted ms-1">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-buttons d-flex gap-2">
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary flex-fill rounded-pill">
+                                <i class="bi bi-bag-plus me-1"></i>Add to Cart
+                            </a>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary rounded-pill">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- No Results Found -->
+        <div class="no-results-section text-center py-5">
+            <div class="no-results-content">
+                <div class="no-results-icon mb-4">
+                    <i class="bi bi-search display-1 text-muted"></i>
+                </div>
+                <h3 class="no-results-title mb-3">No results found for "{{ query }}"</h3>
+                <p class="no-results-text text-muted mb-4">
+                    Try adjusting your search terms or browse our categories below
+                </p>
+                <div class="suggestions-section">
+                    <h5 class="suggestions-title mb-3">Popular Categories</h5>
+                    <div class="suggestions-links d-flex flex-wrap justify-content-center gap-2">
+                        <a href="{% url 'search' %}?s=formal" class="btn btn-outline-primary btn-sm rounded-pill">Formal</a>
+                        <a href="{% url 'search' %}?s=casual" class="btn btn-outline-primary btn-sm rounded-pill">Casual</a>
+                        <a href="{% url 'search' %}?s=party" class="btn btn-outline-primary btn-sm rounded-pill">Party</a>
+                        <a href="{% url 'search' %}?s=bridal" class="btn btn-outline-primary btn-sm rounded-pill">Bridal</a>
+                        <a href="{% url 'gents' %}" class="btn btn-outline-secondary btn-sm rounded-pill">Men's Fashion</a>
+                        <a href="{% url 'ladies' %}" class="btn btn-outline-secondary btn-sm rounded-pill">Women's Fashion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Modern CSS Styles -->
+<style>
+/* Search Hero Section */
+.search-hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.search-hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.search-shape {
+    position: absolute;
+    opacity: 0.1;
+}
+
+.search-shape-1 {
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 50%;
+    top: 20%;
+    right: 15%;
+    animation: searchFloat 6s ease-in-out infinite;
+}
+
+.search-shape-2 {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    bottom: 30%;
+    left: 20%;
+    animation: searchFloat 8s ease-in-out infinite reverse;
+}
+
+.search-shape-3 {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    right: 30%;
+    animation: searchFloat 4s ease-in-out infinite;
+}
+
+@keyframes searchFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+.search-hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Enhanced Search Bar */
+.search-bar-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input-wrapper {
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.3);
+}
+
+.search-input-modern {
+    border: none;
+    padding: 1rem 4rem 1rem 2rem;
+    font-size: 1.1rem;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-input-modern:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.search-btn-modern {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bs-primary);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.search-btn-modern:hover {
+    background: var(--bs-dark);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Search Statistics */
+.search-stats {
+    align-items: center;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 30px;
+    background: #dee2e6;
+}
+
+.search-sort-select {
+    max-width: 200px;
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+    padding: 0.5rem 1rem;
+}
+
+/* Modern Search Cards */
+.modern-search-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.modern-search-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.search-image-container {
+    height: 280px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+}
+
+.search-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.search-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modern-search-card:hover .search-overlay {
+    opacity: 1;
+}
+
+.modern-search-card:hover .search-image {
+    transform: scale(1.1);
+}
+
+.search-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.search-action-btn {
+    width: 45px;
+    height: 45px;
+    background: white;
+    color: var(--bs-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.search-action-btn:hover {
+    background: var(--bs-primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.search-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.search-badge {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+/* No Results Section */
+.no-results-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+.suggestions-links .btn {
+    margin: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-title {
+        font-size: 2rem !important;
+    }
+    
+    .search-image-container {
+        height: 220px;
+    }
+    
+    .search-input-modern {
+        padding: 0.875rem 3.5rem 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .search-btn-modern {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .search-stats {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    
+    .stat-divider {
+        display: none;
+    }
+}
+
+/* Animation for search items */
+.search-result-item {
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.search-result-item.hide {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+</style>
+
+<!-- Modern JavaScript for Search Results -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sortSelect = document.getElementById('sortSearchResults');
+    const resultItems = document.querySelectorAll('.search-result-item');
+    const resultsGrid = document.getElementById('searchResultsGrid');
+
+    if (sortSelect && resultsGrid) {
+        // Sort functionality
+        sortSelect.addEventListener('change', function() {
+            const sortValue = this.value;
+            const itemsArray = Array.from(resultItems);
+            
+            itemsArray.sort((a, b) => {
+                switch(sortValue) {
+                    case 'name':
+                        return a.dataset.name.localeCompare(b.dataset.name);
+                    case 'price-low':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'price-high':
+                        return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                    case 'newest':
+                        return new Date(b.dataset.created) - new Date(a.dataset.created);
+                    default: // relevance
+                        return 0;
+                }
+            });
+            
+            // Reorder DOM elements
+            itemsArray.forEach(item => {
+                resultsGrid.appendChild(item);
+            });
+        });
+    }
+
+    // Search input auto-focus
+    const searchInput = document.querySelector('.search-input-modern');
+    if (searchInput && !searchInput.value) {
+        searchInput.focus();
+    }
+});
+</script>
+
+{% endblock %} 

@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Product
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Admin Login View
 def admin_login(request):
@@ -128,12 +129,30 @@ def home(request):
 
     # Fetch bridal dresses
     bridal_dresses = Product.objects.filter(category='bridal')
+    
+    # Fetch collections by gender and category
+    mens_formal = Product.objects.filter(gender='male', category='formal')[:6]
+    mens_casual = Product.objects.filter(gender='male', category='casual')[:6]
+    womens_party = Product.objects.filter(gender='female', category='party')[:6]
+    womens_casual = Product.objects.filter(gender='female', category='casual')[:6]
+    
+    # Fetch featured collections
+    formal_collection = Product.objects.filter(category='formal')[:8]
+    party_collection = Product.objects.filter(category='party')[:8]
+    casual_collection = Product.objects.filter(category='casual')[:8]
 
     context = {
         'products': all_products,
         'new_arrivals': new_arrivals,
         'best_sellers': best_sellers,
         'bridal_dresses': bridal_dresses,
+        'mens_formal': mens_formal,
+        'mens_casual': mens_casual,
+        'womens_party': womens_party,
+        'womens_casual': womens_casual,
+        'formal_collection': formal_collection,
+        'party_collection': party_collection,
+        'casual_collection': casual_collection,
     }
     return render(request, 'home.html', context)
 
@@ -187,6 +206,63 @@ def signout_view(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
     return redirect('home')
+
+# Forgot Password View
+def forgot_password_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        # Check if user with this email exists
+        try:
+            user = User.objects.get(email=email)
+            # Here you would typically send an email with reset link
+            # For now, we'll just show a success message
+            messages.success(request, f'Password reset instructions have been sent to {email}. Please check your inbox.')
+            return redirect('signin')
+        except User.DoesNotExist:
+            # Don't reveal if email exists for security
+            messages.success(request, f'Password reset instructions have been sent to {email}. Please check your inbox.')
+            return redirect('signin')
+    
+    return render(request, 'forgot_password.html')
+
+# Profile View
+@login_required
+def profile_view(request):
+    # Get user statistics
+    user_orders = []  # In a real app, you'd fetch from Order model
+    total_orders = len(user_orders)
+    total_spent = 0  # Sum of all orders
+    
+    # Get wishlist count
+    try:
+        wishlist = WishList.objects.get(user=request.user)
+        wishlist_count = wishlist.products.count() if hasattr(wishlist, 'products') else 0
+    except WishList.DoesNotExist:
+        wishlist_count = 0
+    
+    context = {
+        'orders': user_orders,
+        'total_orders': total_orders,
+        'total_spent': total_spent,
+        'wishlist_count': wishlist_count,
+    }
+    return render(request, 'profile.html', context)
+
+# Update Profile View
+@login_required
+def update_profile_view(request):
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.email = request.POST.get('email', '')
+        user.save()
+        
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('profile')
+    
+    return redirect('profile')
 
 # Add to Cart
 @login_required
@@ -305,6 +381,21 @@ def add_to_wishlist(request, product_id):
 
     return redirect('wishlist_detail')
 
+# Remove from Wishlist
+@login_required
+def remove_from_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    wishlist = WishList.objects.get(user=request.user)
+    
+    try:
+        wishlist_item = WishListItem.objects.get(wishlist=wishlist, product=product)
+        wishlist_item.delete()
+        messages.success(request, f'{product.name} removed from wishlist.')
+    except WishListItem.DoesNotExist:
+        messages.error(request, f'{product.name} is not in your wishlist.')
+    
+    return redirect('wishlist_detail')
+
 def shop_view(request):
     products = Product.objects.all()
     return render(request, 'shop.html', {'products': products})
@@ -363,3 +454,24 @@ def product_detail(request, product_id):
 def product_list_by_gender(request, gender):
     products = Product.objects.filter(gender=gender)
     return render(request, 'product_list.html', {'products': products, 'gender': gender})
+
+# Search View
+def search_view(request):
+    query = request.GET.get('s', '')
+    products = []
+    
+    if query:
+        # Search in product name, description, tags, and category
+        products = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(tags__icontains=query) |
+            Q(category__icontains=query)
+        ).order_by('-created_at')
+    
+    context = {
+        'products': products,
+        'query': query,
+        'total_results': products.count() if products else 0
+    }
+    return render(request, 'search_results.html', context)
